@@ -4,7 +4,8 @@ import java.lang.reflect.Constructor;
 import java.util.Arrays;
 
 public class VetClinic {
-    public void main(String[] args){
+    public static void main(String[] args){
+
         Animal [] animals = new Animal[]{new Dog("Победа", "Сосиски"), new Cat("Тополь", "Сметана"), new Horse("Покровский", "Сено")};
         Veterinarian veterinarian = new Veterinarian();
         for(int i = 0; i<3; i++){
@@ -12,7 +13,7 @@ public class VetClinic {
         }
 
 
-//        Class clazz = veterinarian.getClass();
-//        clazz.treatAnimal(animals[0]);
+        Class clazz = veterinarian.getClass();
+        clazz.treatAnimal(animals[0]);
     }
 }

@@ -9,7 +9,6 @@ public class Book {
         this.title = title;
         this.author = author;
         this.year = year;
-
     }
 
     public String getTitle () {
@@ -20,19 +19,20 @@ public class Book {
         return author;
     }
 
+    public int getYear() {
+        return year;
+    }
+
     public void setAuthor(String author) {
         this.author = author;
     }
 
-    public int getYear() {
-        return year;
-    }
 
     public void setYear(int year) {
         this.year = year;
     }
 
-    public void setTitle(String number) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

@@ -3,7 +3,7 @@ package com.pb.korchevskaja.hw6;
 public class Animal {
     public String food;
     public String location;
-    public Animal(String food, String location){
+    public Animal(String location, String food){
         this.food = food;
         this.location = location;
     }
@@ -31,6 +31,9 @@ public class Animal {
     }
     public void sleep(){
         System.out.println("Животное спит");
+    }
+    public static void main(String[] args){
+
     }
 
 }
