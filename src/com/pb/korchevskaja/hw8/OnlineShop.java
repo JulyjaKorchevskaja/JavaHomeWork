@@ -10,10 +10,34 @@ public class OnlineShop {
         String loginUp = scanner.nextLine();
         String passwordUp = scanner.nextLine();
         String confirmPassword  = scanner.nextLine();
-        user.signUp(loginUp, passwordUp, confirmPassword);
+        int userReg = user.signUp(loginUp, passwordUp, confirmPassword);
+        try {
+            if (userReg == 1)
+                throw new WrongLoginException("Login is not right");
+        } catch (WrongLoginException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (userReg == 2)
+                throw new WrongPasswordException("Password is not right");
+        } catch (WrongPasswordException e) {
+            e.printStackTrace();
+        }
         System.out.println("Войдите:");
-        String loginIn = scanner.nextLine();
-        String passwordIn = scanner.nextLine();
-        user.signIn(loginIn, passwordIn);
+        String login = scanner.nextLine();
+        String password = scanner.nextLine();
+        int signUser = user.signIn(login, password);
+        try {
+            if (signUser == 1)
+                throw new WrongLoginException("Login is not right");
+        } catch (WrongLoginException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (signUser == 2)
+                throw new WrongPasswordException("Password is not right");
+        } catch (WrongPasswordException e) {
+            e.printStackTrace();
+        }
     }
 }
