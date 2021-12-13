@@ -18,5 +18,6 @@ public class Main {
         numbersFloat.add((float) 15.5);
         numbersFloat.add((float) 15.6);
         System.out.println(numbersInteger.average());
+        System.out.println(numbersFloat.average());
     }
 }
