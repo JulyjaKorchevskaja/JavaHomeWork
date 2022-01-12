@@ -1,38 +1,19 @@
 package com.pb.korchevskaja.hw13;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.LinkedList;
 
 public class Threads {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
-        int[] numbers = new int[5];
-        while(true) {
-            for (int i = 0; i < 5; i++) {
-                numbers[i] = (int) (Math.random() * 100);
-            }
+        LinkedList<Double> data = new LinkedList<>();
+        int size = 4;
+        Thread saveAsTheard = new Thread(new SaveAsThread(data, size), "SaveAsThread");
+        Thread readFileAsThread = new Thread(new ReadFileAsThread(data), "ReadFileAsThread");
+        saveAsTheard.start();
+        readFileAsThread.start();
 
-            SaveAsThread write = new SaveAsThread(numbers, "numbers.txt", "write");
+        Thread.sleep(100);
 
-            write.start();
-
-            ReadFileAsThread read = new ReadFileAsThread("numbers.txt", "read");
-
-            read.start();
-
-            try {
-                read.join();
-            } catch (InterruptedException e) {
-                System.out.println("Error: " + e.getMessage());
-                return;
-            }
-
-            int[] numbersFromFile = read.get();
-
-            System.out.print("numbers from file = [ ");
-            for (int d : numbersFromFile)
-                System.out.print(d + " ");
-            System.out.println(" ]");
-        }
+        saveAsTheard.interrupt();
+        readFileAsThread.interrupt();
     }
 }

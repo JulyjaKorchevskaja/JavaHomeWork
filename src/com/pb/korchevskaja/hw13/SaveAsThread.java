@@ -2,46 +2,41 @@ package com.pb.korchevskaja.hw13;
 import java.util.*;
 import java.io.*;
 public class SaveAsThread implements Runnable{
-    private int[] numbers;
-    private String filename;
-    private String threadName;
-    private Thread thread;
+    private final Queue<Double> dataSave;
+    private final int size;
 
-    public SaveAsThread(int[] numbers, String filename, String threadName) {
+    public SaveAsThread(Queue<Double> dataSave, int size) {
 
-        this.numbers = numbers;
+        this.dataSave = dataSave;
 
-        this.filename = filename;
+        this.size = size;
 
-        this.threadName = threadName;
-
-        thread = new Thread(this, "SaveThread");
     }
-
-    public void start() {
-        thread.start();
-    }
-
+    @Override
     public void run() {
-        System.out.println("Begin thread: " + threadName);
+        while (!Thread.interrupted()) {
+            try {
+                System.out.println("Creator: " + createData());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+    }
 
-        try {
-            FileOutputStream fOut = new FileOutputStream(filename);
-
-            PrintStream pS = new PrintStream(fOut);
-
-            pS.println(numbers.length);
-            for (int i=0; i<numbers.length; i++) {
-                pS.println(numbers[i]);
+    private double createData() throws InterruptedException {
+        synchronized (dataSave) {
+            if (dataSave.size() >= size) {
+                dataSave.wait();
             }
 
-            pS.close();
-            fOut.close();
-        }
-        catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            double newValue = Math.random();
+            dataSave.add(newValue);
 
-        System.out.println("End thread: " + threadName);
+            dataSave.notifyAll();
+
+            return newValue;
+        }
     }
+
 }
